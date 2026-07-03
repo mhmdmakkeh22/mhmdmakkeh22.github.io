@@ -1,0 +1,857 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Mohamad Makke — Software Engineer</title>
+<meta name="description" content="Full-stack software engineer building systems with .NET, Angular and PostgreSQL. Currently at ALTEN, available from October 2026." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;450;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --ink: #0A0D13;
+    --ink-2: #0D111A;
+    --surface: #11161F;
+    --surface-2: #151B26;
+    --line: #1D2431;
+    --line-2: #2A3342;
+    --text: #E8ECF3;
+    --muted: #8A95A7;
+    --muted-2: #5D6779;
+    --accent: #FDB347;
+    --accent-dim: #C9863A;
+    --go: #37D2A0;
+    --maxw: 1120px;
+    --ease: cubic-bezier(.22,.61,.36,1);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    * { animation-duration: .001ms !important; transition-duration: .001ms !important; }
+  }
+
+  body {
+    background: var(--ink);
+    color: var(--text);
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  a { color: inherit; text-decoration: none; }
+
+  .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 28px; }
+
+  .mono { font-family: 'JetBrains Mono', monospace; }
+
+  /* ---------- eyebrow / section labels ---------- */
+  .eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    color: var(--accent);
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .eyebrow::before {
+    content: "";
+    width: 26px; height: 1px;
+    background: var(--accent);
+    opacity: .6;
+  }
+
+  /* ---------- nav ---------- */
+  header.nav {
+    position: sticky; top: 0; z-index: 50;
+    background: rgba(10,13,19,.72);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid transparent;
+    transition: border-color .3s var(--ease), background .3s var(--ease);
+  }
+  header.nav.scrolled { border-bottom-color: var(--line); }
+  .nav-inner {
+    display: flex; align-items: center; justify-content: space-between;
+    height: 64px;
+  }
+  .brand {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700; font-size: 17px; letter-spacing: -.01em;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .brand .dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 0 4px rgba(253,179,71,.15);
+  }
+  .nav-links { display: flex; align-items: center; gap: 30px; }
+  .nav-links a {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px; color: var(--muted);
+    transition: color .2s var(--ease);
+    position: relative;
+  }
+  .nav-links a:hover { color: var(--text); }
+  .nav-links > a::after {
+    content: ""; position: absolute; left: 0; bottom: -6px;
+    width: 0; height: 1px; background: var(--accent);
+    transition: width .25s var(--ease);
+  }
+  .nav-links > a:hover::after { width: 100%; }
+
+  .lang-toggle {
+    display: inline-flex; border: 1px solid var(--line-2);
+    border-radius: 999px; overflow: hidden; font-family: 'JetBrains Mono', monospace;
+    font-size: 12px; margin-left: 6px;
+  }
+  .lang-toggle button {
+    background: transparent; border: 0; color: var(--muted);
+    padding: 6px 12px; cursor: pointer; font-family: inherit; font-size: inherit;
+    transition: color .2s var(--ease), background .2s var(--ease);
+  }
+  .lang-toggle button.active { background: var(--accent); color: #0A0D13; font-weight: 700; }
+
+  .nav-toggle-mobile { display: none; }
+
+  /* ---------- hero ---------- */
+  .hero { position: relative; padding: 96px 0 84px; overflow: hidden; }
+  #grid-canvas {
+    position: absolute; inset: 0; width: 100%; height: 100%;
+    z-index: 0; opacity: .55;
+  }
+  .hero::after {
+    content: ""; position: absolute; inset: 0; z-index: 1; pointer-events: none;
+    background:
+      radial-gradient(120% 90% at 15% 20%, transparent 30%, var(--ink) 78%),
+      linear-gradient(180deg, transparent 55%, var(--ink) 100%);
+  }
+  .hero .wrap { position: relative; z-index: 2; }
+
+  .status {
+    display: inline-flex; align-items: center; gap: 9px;
+    font-family: 'JetBrains Mono', monospace; font-size: 12.5px;
+    color: var(--muted); letter-spacing: .04em;
+    border: 1px solid var(--line-2); border-radius: 999px;
+    padding: 7px 14px; margin-bottom: 30px;
+    background: rgba(17,22,31,.6);
+  }
+  .status .pulse {
+    width: 8px; height: 8px; border-radius: 50%; background: var(--go);
+    position: relative;
+  }
+  .status .pulse::after {
+    content: ""; position: absolute; inset: 0; border-radius: 50%;
+    background: var(--go); animation: pulse 2.4s ease-out infinite;
+  }
+  @keyframes pulse {
+    0% { transform: scale(1); opacity: .7; }
+    70% { transform: scale(2.6); opacity: 0; }
+    100% { opacity: 0; }
+  }
+
+  h1.hero-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: clamp(2.6rem, 6.2vw, 4.6rem);
+    line-height: 1.02; letter-spacing: -.03em;
+    margin-bottom: 22px;
+  }
+  h1.hero-title .accent { color: var(--accent); }
+  .hero-sub {
+    font-size: clamp(1.02rem, 1.8vw, 1.25rem);
+    color: var(--muted); max-width: 620px; line-height: 1.65;
+    margin-bottom: 34px;
+  }
+  .hero-sub strong { color: var(--text); font-weight: 600; }
+
+  .hero-cta { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 9px;
+    font-family: 'JetBrains Mono', monospace; font-size: 13.5px;
+    padding: 12px 20px; border-radius: 10px; cursor: pointer;
+    transition: transform .2s var(--ease), background .2s var(--ease), border-color .2s var(--ease);
+    border: 1px solid var(--line-2); color: var(--text);
+  }
+  .btn svg { width: 16px; height: 16px; }
+  .btn-primary { background: var(--accent); color: #0A0D13; border-color: var(--accent); font-weight: 700; }
+  .btn-primary:hover { transform: translateY(-2px); background: #ffc061; }
+  .btn-ghost:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-2px); }
+
+  .hero-tech {
+    display: flex; flex-wrap: wrap; gap: 8px 10px; margin-top: 40px;
+    font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--muted-2);
+  }
+  .hero-tech span { color: var(--muted); }
+  .hero-tech .sep { color: var(--line-2); }
+
+  /* ---------- section shell ---------- */
+  section.block { padding: 84px 0; border-top: 1px solid var(--line); position: relative; }
+  .section-head { margin-bottom: 46px; }
+  .section-head h2 {
+    font-family: 'Space Grotesk', sans-serif; font-weight: 600;
+    font-size: clamp(1.7rem, 3.4vw, 2.4rem); letter-spacing: -.02em;
+    margin-top: 14px;
+  }
+
+  /* ---------- about ---------- */
+  .about-grid { display: grid; grid-template-columns: 1.5fr 1fr; gap: 48px; align-items: start; }
+  .about-text p { color: var(--muted); margin-bottom: 18px; font-size: 1.05rem; }
+  .about-text p strong { color: var(--text); font-weight: 600; }
+  .facts { border: 1px solid var(--line); border-radius: 14px; background: var(--surface); overflow: hidden; }
+  .fact {
+    display: flex; justify-content: space-between; align-items: baseline; gap: 16px;
+    padding: 15px 20px; border-bottom: 1px solid var(--line);
+    font-family: 'JetBrains Mono', monospace; font-size: 13px;
+  }
+  .fact:last-child { border-bottom: 0; }
+  .fact .k { color: var(--muted-2); letter-spacing: .04em; }
+  .fact .v { color: var(--text); text-align: right; }
+  .fact .v.go { color: var(--go); }
+
+  /* ---------- skills ---------- */
+  .skills-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; }
+  .skill-card {
+    border: 1px solid var(--line); border-radius: 14px; padding: 22px 24px;
+    background: var(--surface); transition: border-color .25s var(--ease), transform .25s var(--ease);
+  }
+  .skill-card:hover { border-color: var(--line-2); transform: translateY(-3px); }
+  .skill-card h3 {
+    font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: .12em;
+    text-transform: uppercase; color: var(--accent); margin-bottom: 16px; font-weight: 500;
+  }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .chip {
+    font-family: 'JetBrains Mono', monospace; font-size: 12.5px;
+    color: var(--text); background: var(--surface-2);
+    border: 1px solid var(--line-2); border-radius: 7px; padding: 5px 11px;
+    transition: color .2s var(--ease), border-color .2s var(--ease);
+  }
+  .skill-card:hover .chip { border-color: #333d4d; }
+
+  /* ---------- experience timeline ---------- */
+  .timeline { position: relative; }
+  .tl-item {
+    display: grid; grid-template-columns: 190px 1fr; gap: 34px;
+    padding: 26px 0; border-top: 1px solid var(--line); position: relative;
+  }
+  .tl-item:first-child { border-top: 0; }
+  .tl-meta { font-family: 'JetBrains Mono', monospace; }
+  .tl-date { font-size: 12.5px; color: var(--accent); letter-spacing: .03em; }
+  .tl-place { font-size: 12px; color: var(--muted-2); margin-top: 8px; }
+  .tl-body h3 { font-family: 'Space Grotesk', sans-serif; font-size: 1.22rem; font-weight: 600; letter-spacing: -.01em; }
+  .tl-body .company { color: var(--accent); font-weight: 500; }
+  .tl-body p { color: var(--muted); margin-top: 10px; font-size: .98rem; max-width: 620px; }
+
+  /* ---------- projects ---------- */
+  .proj-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+  .proj-grid .featured { grid-column: 1 / -1; }
+  .proj {
+    border: 1px solid var(--line); border-radius: 16px; background: var(--surface);
+    padding: 26px 28px; display: flex; flex-direction: column;
+    transition: border-color .25s var(--ease), transform .25s var(--ease), background .25s var(--ease);
+    position: relative; overflow: hidden;
+  }
+  .proj:hover { border-color: var(--line-2); transform: translateY(-4px); background: var(--surface-2); }
+  .featured {
+    background: linear-gradient(135deg, var(--surface-2), var(--surface));
+    border-color: var(--line-2);
+  }
+  .featured::before {
+    content: ""; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(90deg, var(--accent), transparent 70%);
+  }
+  .proj-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 14px; margin-bottom: 14px; }
+  .proj-tag {
+    font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: .1em;
+    text-transform: uppercase; color: var(--muted-2);
+    border: 1px solid var(--line-2); border-radius: 6px; padding: 4px 9px; white-space: nowrap;
+  }
+  .proj h3 { font-family: 'Space Grotesk', sans-serif; font-size: 1.35rem; font-weight: 600; letter-spacing: -.01em; margin-bottom: 10px; }
+  .featured h3 { font-size: 1.7rem; }
+  .proj p { color: var(--muted); font-size: .97rem; flex: 1; }
+  .featured p { max-width: 680px; font-size: 1.02rem; }
+  .proj-stack { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 18px; }
+  .proj-stack .s {
+    font-family: 'JetBrains Mono', monospace; font-size: 11.5px; color: var(--muted);
+  }
+  .proj-stack .s:not(:last-child)::after { content: "·"; margin-left: 7px; color: var(--line-2); }
+  .proj-links { display: flex; gap: 16px; margin-top: 18px; }
+  .proj-links a {
+    font-family: 'JetBrains Mono', monospace; font-size: 12.5px; color: var(--accent);
+    display: inline-flex; align-items: center; gap: 6px;
+    transition: gap .2s var(--ease);
+  }
+  .proj-links a:hover { gap: 10px; }
+  .proj-links a svg { width: 14px; height: 14px; }
+
+  /* ---------- certs + edu ---------- */
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; }
+  .list-block h3.sub {
+    font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: .14em;
+    text-transform: uppercase; color: var(--accent); margin-bottom: 22px; font-weight: 500;
+  }
+  .entry { padding: 16px 0; border-top: 1px solid var(--line); }
+  .entry:first-of-type { border-top: 0; padding-top: 0; }
+  .entry .title { font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 1.02rem; }
+  .entry .meta { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--muted-2); margin-top: 5px; }
+  .entry .meta .yr { color: var(--accent); }
+
+  /* ---------- contact ---------- */
+  .contact { text-align: center; padding: 100px 0 90px; }
+  .contact h2 {
+    font-family: 'Space Grotesk', sans-serif; font-weight: 700;
+    font-size: clamp(2rem, 5vw, 3.4rem); letter-spacing: -.03em; margin: 18px 0 22px;
+  }
+  .contact h2 .accent { color: var(--accent); }
+  .contact p { color: var(--muted); max-width: 480px; margin: 0 auto 36px; font-size: 1.08rem; }
+  .contact-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; }
+
+  /* ---------- footer ---------- */
+  footer.foot {
+    border-top: 1px solid var(--line); padding: 30px 0;
+    display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 14px;
+    font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--muted-2);
+  }
+  footer.foot a:hover { color: var(--accent); }
+
+  /* ---------- reveal animation ---------- */
+  .reveal { opacity: 0; transform: translateY(22px); transition: opacity .7s var(--ease), transform .7s var(--ease); }
+  .reveal.in { opacity: 1; transform: none; }
+
+  /* ---------- responsive ---------- */
+  @media (max-width: 860px) {
+    .nav-links a:not(.lang-wrap) { display: none; }
+    .about-grid, .two-col { grid-template-columns: 1fr; gap: 30px; }
+    .skills-grid, .proj-grid { grid-template-columns: 1fr; }
+    .tl-item { grid-template-columns: 1fr; gap: 10px; }
+    .tl-place { margin-top: 4px; }
+    .hero { padding: 70px 0 64px; }
+    section.block { padding: 64px 0; }
+  }
+  @media (max-width: 480px) {
+    .wrap { padding: 0 20px; }
+    .hero-cta { width: 100%; }
+    .btn { flex: 1; justify-content: center; }
+  }
+</style>
+</head>
+<body>
+
+<header class="nav" id="nav">
+  <div class="wrap nav-inner">
+    <a href="#top" class="brand"><span class="dot"></span>Mohamad Makke</a>
+    <nav class="nav-links">
+      <a href="#about" data-i18n="nav_about">About</a>
+      <a href="#skills" data-i18n="nav_skills">Skills</a>
+      <a href="#experience" data-i18n="nav_exp">Experience</a>
+      <a href="#work" data-i18n="nav_work">Work</a>
+      <a href="#contact" data-i18n="nav_contact">Contact</a>
+      <span class="lang-wrap lang-toggle" role="group" aria-label="Language">
+        <button data-lang="en" class="active" aria-pressed="true">EN</button>
+        <button data-lang="fr" aria-pressed="false">FR</button>
+      </span>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- HERO -->
+  <section class="hero">
+    <canvas id="grid-canvas" aria-hidden="true"></canvas>
+    <div class="wrap">
+      <div class="status">
+        <span class="pulse"></span>
+        <span data-i18n="status">Available from October 2026 · Rennes, France</span>
+      </div>
+      <h1 class="hero-title">
+        <span data-i18n="hero_l1">Full-stack engineer</span><br />
+        <span class="accent" data-i18n="hero_l2">building systems that run.</span>
+      </h1>
+      <p class="hero-sub" data-i18n="hero_sub">
+        Final-year software engineering student at ENSTA Bretagne, currently on my end-of-studies internship at <strong>ALTEN</strong>. I design and ship full-stack systems — from traffic-simulation platforms to production backends — with <strong>.NET</strong>, <strong>Angular</strong> and <strong>PostgreSQL</strong>.
+      </p>
+      <div class="hero-cta">
+        <a class="btn btn-primary" href="mailto:makkeh2003@gmail.com">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v16H4z"/><path d="m4 6 8 6 8-6"/></svg>
+          <span data-i18n="cta_email">Get in touch</span>
+        </a>
+        <a class="btn btn-ghost" href="Mohamad_Makke_CV.pdf" download>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12"/><path d="m7 12 5 5 5-5"/><path d="M5 21h14"/></svg>
+          <span data-i18n="cta_cv">Download CV</span>
+        </a>
+        <a class="btn btn-ghost" href="https://github.com/mhmdmakkeh22" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.5 2 2 6.6 2 12.2c0 4.5 2.9 8.3 6.8 9.6.5.1.7-.2.7-.5v-1.7c-2.8.6-3.4-1.4-3.4-1.4-.5-1.2-1.1-1.5-1.1-1.5-.9-.6.1-.6.1-.6 1 .1 1.5 1 1.5 1 .9 1.6 2.4 1.1 3 .9.1-.7.4-1.1.6-1.4-2.2-.3-4.6-1.1-4.6-5 0-1.1.4-2 1-2.7-.1-.3-.4-1.3.1-2.7 0 0 .8-.3 2.7 1a9.3 9.3 0 0 1 5 0c1.9-1.3 2.7-1 2.7-1 .5 1.4.2 2.4.1 2.7.6.7 1 1.6 1 2.7 0 3.9-2.4 4.7-4.6 5 .4.3.7.9.7 1.9v2.8c0 .3.2.6.7.5A10.2 10.2 0 0 0 22 12.2C22 6.6 17.5 2 12 2Z"/></svg>
+          <span>GitHub</span>
+        </a>
+      </div>
+      <div class="hero-tech">
+        <span>C#</span><span class="sep">/</span><span>TypeScript</span><span class="sep">/</span><span>Python</span><span class="sep">/</span><span>ASP.NET Core</span><span class="sep">/</span><span>Angular</span><span class="sep">/</span><span>PostgreSQL</span><span class="sep">/</span><span>Docker</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="block" id="about">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="eyebrow" data-i18n="eb_about">About</span>
+        <h2 data-i18n="about_title">Engineer first, full-stack by range.</h2>
+      </div>
+      <div class="about-grid">
+        <div class="about-text reveal">
+          <p data-i18n="about_p1">I'm a software engineer who likes owning a feature end to end — from the database schema through the API to what a user actually clicks. My background spans <strong>backend architecture</strong> (ASP.NET Core, DDD), <strong>modern front-ends</strong> (Angular, TypeScript) and the data layer that ties them together.</p>
+          <p data-i18n="about_p2">Right now at ALTEN I'm turning a traffic-simulation viewer into a <strong>decision-support platform</strong> — building KPI dashboards, a scenario comparator and a PostGIS-backed map, while untangling the kind of real bugs that only show up under production data. I care about <strong>simple code</strong> that holds up, clear documentation, and shipping things that work across machines.</p>
+        </div>
+        <div class="facts reveal">
+          <div class="fact"><span class="k" data-i18n="f_role">ROLE</span><span class="v" data-i18n="f_role_v">Software Engineer</span></div>
+          <div class="fact"><span class="k" data-i18n="f_loc">LOCATION</span><span class="v">Rennes, France</span></div>
+          <div class="fact"><span class="k" data-i18n="f_avail">AVAILABILITY</span><span class="v go" data-i18n="f_avail_v">Oct 2026</span></div>
+          <div class="fact"><span class="k" data-i18n="f_focus">FOCUS</span><span class="v">.NET · Angular</span></div>
+          <div class="fact"><span class="k" data-i18n="f_langs">LANGUAGES</span><span class="v" data-i18n="f_langs_v">EN C1 · FR B2 · AR native</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section class="block" id="skills">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="eyebrow" data-i18n="eb_skills">Stack</span>
+        <h2 data-i18n="skills_title">What I build with.</h2>
+      </div>
+      <div class="skills-grid">
+        <div class="skill-card reveal">
+          <h3 data-i18n="sk_lang">Languages</h3>
+          <div class="chips"><span class="chip">C#</span><span class="chip">TypeScript</span><span class="chip">Python</span><span class="chip">JavaScript</span><span class="chip">Java</span><span class="chip">C</span><span class="chip">PHP</span></div>
+        </div>
+        <div class="skill-card reveal">
+          <h3 data-i18n="sk_fw">Frameworks &amp; Web</h3>
+          <div class="chips"><span class="chip">ASP.NET Core</span><span class="chip">Angular</span><span class="chip">Blazor</span><span class="chip">Laravel</span><span class="chip">Express</span><span class="chip">GraphQL</span><span class="chip">Bootstrap</span></div>
+        </div>
+        <div class="skill-card reveal">
+          <h3 data-i18n="sk_db">Databases</h3>
+          <div class="chips"><span class="chip">PostgreSQL / PostGIS</span><span class="chip">MySQL</span><span class="chip">MongoDB</span><span class="chip">SQL</span></div>
+        </div>
+        <div class="skill-card reveal">
+          <h3 data-i18n="sk_ops">Cloud &amp; DevOps</h3>
+          <div class="chips"><span class="chip">Docker</span><span class="chip">Git</span><span class="chip">CI/CD</span><span class="chip">Azure</span><span class="chip">Apache Spark</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPERIENCE -->
+  <section class="block" id="experience">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="eyebrow" data-i18n="eb_exp">Experience</span>
+        <h2 data-i18n="exp_title">Where I've worked.</h2>
+      </div>
+      <div class="timeline">
+
+        <div class="tl-item reveal">
+          <div class="tl-meta">
+            <div class="tl-date">Mar 2026 — Oct 2026</div>
+            <div class="tl-place">Rennes, France</div>
+          </div>
+          <div class="tl-body">
+            <h3>Software Engineer · <span class="company">ALTEN</span></h3>
+            <p data-i18n="exp_alten">Full-stack development on SimViewer, a traffic-simulation visualization platform. Built KPI dashboards and a scenario comparator (Angular + Chart.js), refactored a monolithic component into SOLID services with 40+ unit tests, and optimized PostgreSQL/PostGIS queries and Docker workflows.</p>
+          </div>
+        </div>
+
+        <div class="tl-item reveal">
+          <div class="tl-meta">
+            <div class="tl-date">May 2025 — Sep 2025</div>
+            <div class="tl-place">France</div>
+          </div>
+          <div class="tl-body">
+            <h3>Software Engineer Intern · <span class="company">GE Vernova</span></h3>
+            <p data-i18n="exp_ge">Optimized an internal application for performance, security and code quality. Designed a traceability system end to end: database schema, REST API and a Blazor interface.</p>
+          </div>
+        </div>
+
+        <div class="tl-item reveal">
+          <div class="tl-meta">
+            <div class="tl-date">May 2024 — Jul 2024</div>
+            <div class="tl-place">Lebanon</div>
+          </div>
+          <div class="tl-body">
+            <h3>Full-Stack Developer Intern · <span class="company">Libanux</span></h3>
+            <p data-i18n="exp_lib">Front-end development with Angular and API testing with Postman. Designed and queried MongoDB databases for reliability and performance.</p>
+          </div>
+        </div>
+
+        <div class="tl-item reveal">
+          <div class="tl-meta">
+            <div class="tl-date">Jul 2023 — Sep 2023</div>
+            <div class="tl-place">Lebanon</div>
+          </div>
+          <div class="tl-body">
+            <h3>Backend Developer Intern · <span class="company">SmartSoft</span></h3>
+            <p data-i18n="exp_ss">Backend development in ASP.NET Core with Entity Framework and LINQ. Implemented a Domain-Driven Design architecture for maintainability and scalability.</p>
+          </div>
+        </div>
+
+        <div class="tl-item reveal">
+          <div class="tl-meta">
+            <div class="tl-date">Jan 2023 — May 2023</div>
+            <div class="tl-place">Lebanon</div>
+          </div>
+          <div class="tl-body">
+            <h3>Laravel Developer Intern · <span class="company">Bluemint</span></h3>
+            <p data-i18n="exp_bm">Authentication and MySQL management with Laravel. Backend development in PHP following security best practices.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- WORK / PROJECTS -->
+  <section class="block" id="work">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="eyebrow" data-i18n="eb_work">Selected Work</span>
+        <h2 data-i18n="work_title">Things I've built.</h2>
+      </div>
+      <div class="proj-grid">
+
+        <div class="proj featured reveal">
+          <div class="proj-top">
+            <span class="proj-tag" data-i18n="tag_flagship">Flagship · ALTEN</span>
+          </div>
+          <h3>SimViewer / ETM</h3>
+          <p data-i18n="proj_sim">A full-stack platform that turns SUMO traffic simulations into a decision-support tool for evaluating traffic-management strategies. Side-by-side and overlay scenario comparison, KPI charts, and a PostGIS-backed map viewer — with a Bash pipeline that provisions scenarios across Docker, SUMO and PostgreSQL.</p>
+          <div class="proj-stack"><span class="s">Angular</span><span class="s">ASP.NET Core</span><span class="s">PostgreSQL / PostGIS</span><span class="s">Chart.js</span><span class="s">Docker</span></div>
+        </div>
+
+        <div class="proj reveal">
+          <div class="proj-top"><span class="proj-tag">Laravel</span></div>
+          <h3 data-i18n="proj_ecom_t">E-Commerce Platform</h3>
+          <p data-i18n="proj_ecom">A full e-commerce web app: product catalog, cart and secure checkout, backed by MySQL with a clean MVC structure.</p>
+          <div class="proj-stack"><span class="s">Laravel</span><span class="s">PHP</span><span class="s">MySQL</span><span class="s">Bootstrap</span></div>
+        </div>
+
+        <div class="proj reveal">
+          <div class="proj-top"><span class="proj-tag">Laravel</span></div>
+          <h3 data-i18n="proj_social_t">Social Posting App</h3>
+          <p data-i18n="proj_social">A micro-blogging app inspired by Twitter — user posts, feeds, likes and authentication, built on Laravel.</p>
+          <div class="proj-stack"><span class="s">Laravel</span><span class="s">PHP</span><span class="s">MySQL</span></div>
+          <div class="proj-links">
+            <a href="https://github.com/mhmdmakkeh22/Laravel-Blog-Project" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.5 2 2 6.6 2 12.2c0 4.5 2.9 8.3 6.8 9.6.5.1.7-.2.7-.5v-1.7c-2.8.6-3.4-1.4-3.4-1.4-.5-1.2-1.1-1.5-1.1-1.5-.9-.6.1-.6.1-.6 1 .1 1.5 1 1.5 1 .9 1.6 2.4 1.1 3 .9.1-.7.4-1.1.6-1.4-2.2-.3-4.6-1.1-4.6-5 0-1.1.4-2 1-2.7-.1-.3-.4-1.3.1-2.7 0 0 .8-.3 2.7 1a9.3 9.3 0 0 1 5 0c1.9-1.3 2.7-1 2.7-1 .5 1.4.2 2.4.1 2.7.6.7 1 1.6 1 2.7 0 3.9-2.4 4.7-4.6 5 .4.3.7.9.7 1.9v2.8c0 .3.2.6.7.5A10.2 10.2 0 0 0 22 12.2C22 6.6 17.5 2 12 2Z"/></svg>
+              <span data-i18n="link_code">View code</span>
+            </a>
+          </div>
+        </div>
+
+        <div class="proj reveal">
+          <div class="proj-top"><span class="proj-tag" data-i18n="tag_backend">Backend</span></div>
+          <h3 data-i18n="proj_erp_t">ERP System</h3>
+          <p data-i18n="proj_erp">Backend development for an ERP system — business modules, relational data models and REST APIs designed for maintainability.</p>
+          <div class="proj-stack"><span class="s">Backend</span><span class="s">REST APIs</span><span class="s">SQL</span></div>
+        </div>
+
+        <div class="proj reveal">
+          <div class="proj-top"><span class="proj-tag" data-i18n="tag_fullstack">Full-stack</span></div>
+          <h3 data-i18n="proj_gym_t">Gym Management System</h3>
+          <p data-i18n="proj_gym">A complete gym management interface — memberships, schedules and an admin dashboard to run day-to-day operations.</p>
+          <div class="proj-stack"><span class="s">Full-stack</span><span class="s">Dashboard</span><span class="s">MySQL</span></div>
+        </div>
+
+        <div class="proj reveal">
+          <div class="proj-top"><span class="proj-tag" data-i18n="tag_ml">Deep Learning</span></div>
+          <h3 data-i18n="proj_resp_t">Respiratory Sound Classification</h3>
+          <p data-i18n="proj_resp">A deep-learning model for automatic classification of respiratory sounds, with audio preprocessing and segmentation for feature extraction. Academic research project.</p>
+          <div class="proj-stack"><span class="s">Python</span><span class="s">Deep Learning</span><span class="s">Signal Processing</span></div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- EDUCATION + CERTS -->
+  <section class="block" id="education">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="eyebrow" data-i18n="eb_edu">Background</span>
+        <h2 data-i18n="edu_title">Education &amp; certifications.</h2>
+      </div>
+      <div class="two-col">
+        <div class="list-block reveal">
+          <h3 class="sub" data-i18n="edu_sub">Education</h3>
+          <div class="entry">
+            <div class="title" data-i18n="edu_ensta">Engineering Degree — Digital Systems Design</div>
+            <div class="meta">ENSTA Bretagne · <span class="yr">2025 — 2026</span> · France</div>
+          </div>
+          <div class="entry">
+            <div class="title" data-i18n="edu_ul">B.Sc. — Networks &amp; Telecommunications Engineering</div>
+            <div class="meta" data-i18n="edu_ul_m">Université Libanaise · <span class="yr">2021 — 2024</span> · Lebanon</div>
+          </div>
+        </div>
+        <div class="list-block reveal">
+          <h3 class="sub" data-i18n="cert_sub">Certifications</h3>
+          <div class="entry">
+            <div class="title">Relational Databases &amp; SQL</div>
+            <div class="meta">Stanford Online</div>
+          </div>
+          <div class="entry">
+            <div class="title">Introduction to Linux (LFS101x)</div>
+            <div class="meta">Linux Foundation</div>
+          </div>
+          <div class="entry">
+            <div class="title">Complete AI Engineer Bootcamp</div>
+            <div class="meta">Udemy</div>
+          </div>
+          <div class="entry">
+            <div class="title">Introduction to Generative AI</div>
+            <div class="meta">Google · Coursera</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="block contact" id="contact">
+    <div class="wrap">
+      <span class="eyebrow reveal" data-i18n="eb_contact" style="justify-content:center;">Contact</span>
+      <h2 class="reveal"><span data-i18n="contact_l1">Let's build</span> <span class="accent" data-i18n="contact_l2">something.</span></h2>
+      <p class="reveal" data-i18n="contact_p">I'm looking for a junior software engineer / full-stack .NET role starting October 2026. If that sounds like your team, I'd love to talk.</p>
+      <div class="contact-links reveal">
+        <a class="btn btn-primary" href="mailto:makkeh2003@gmail.com">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v16H4z"/><path d="m4 6 8 6 8-6"/></svg>
+          makkeh2003@gmail.com
+        </a>
+        <a class="btn btn-ghost" href="https://www.linkedin.com/in/makkehd/" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5A2.5 2.5 0 1 0 5 8.5a2.5 2.5 0 0 0 0-5ZM3 9h4v12H3zM9 9h3.8v1.7h.05c.53-1 1.83-2.05 3.77-2.05 4.03 0 4.78 2.65 4.78 6.1V21h-4v-5.4c0-1.3 0-2.95-1.8-2.95s-2.07 1.4-2.07 2.85V21H9z"/></svg>
+          LinkedIn
+        </a>
+        <a class="btn btn-ghost" href="https://github.com/mhmdmakkeh22" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.5 2 2 6.6 2 12.2c0 4.5 2.9 8.3 6.8 9.6.5.1.7-.2.7-.5v-1.7c-2.8.6-3.4-1.4-3.4-1.4-.5-1.2-1.1-1.5-1.1-1.5-.9-.6.1-.6.1-.6 1 .1 1.5 1 1.5 1 .9 1.6 2.4 1.1 3 .9.1-.7.4-1.1.6-1.4-2.2-.3-4.6-1.1-4.6-5 0-1.1.4-2 1-2.7-.1-.3-.4-1.3.1-2.7 0 0 .8-.3 2.7 1a9.3 9.3 0 0 1 5 0c1.9-1.3 2.7-1 2.7-1 .5 1.4.2 2.4.1 2.7.6.7 1 1.6 1 2.7 0 3.9-2.4 4.7-4.6 5 .4.3.7.9.7 1.9v2.8c0 .3.2.6.7.5A10.2 10.2 0 0 0 22 12.2C22 6.6 17.5 2 12 2Z"/></svg>
+          GitHub
+        </a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="foot">
+  <div class="wrap" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:14px;width:100%;">
+    <span>© 2026 Mohamad Makke</span>
+    <span data-i18n="foot_built">Built from scratch · Rennes, France</span>
+  </div>
+</footer>
+
+<script>
+/* ---------------- i18n ---------------- */
+const translations = {
+  en: {
+    nav_about: "About", nav_skills: "Skills", nav_exp: "Experience", nav_work: "Work", nav_contact: "Contact",
+    status: "Available from October 2026 · Rennes, France",
+    hero_l1: "Full-stack engineer", hero_l2: "building systems that run.",
+    hero_sub: "Final-year software engineering student at ENSTA Bretagne, currently on my end-of-studies internship at <strong>ALTEN</strong>. I design and ship full-stack systems — from traffic-simulation platforms to production backends — with <strong>.NET</strong>, <strong>Angular</strong> and <strong>PostgreSQL</strong>.",
+    cta_email: "Get in touch", cta_cv: "Download CV",
+    eb_about: "About", about_title: "Engineer first, full-stack by range.",
+    about_p1: "I'm a software engineer who likes owning a feature end to end — from the database schema through the API to what a user actually clicks. My background spans <strong>backend architecture</strong> (ASP.NET Core, DDD), <strong>modern front-ends</strong> (Angular, TypeScript) and the data layer that ties them together.",
+    about_p2: "Right now at ALTEN I'm turning a traffic-simulation viewer into a <strong>decision-support platform</strong> — building KPI dashboards, a scenario comparator and a PostGIS-backed map, while untangling the kind of real bugs that only show up under production data. I care about <strong>simple code</strong> that holds up, clear documentation, and shipping things that work across machines.",
+    f_role: "ROLE", f_role_v: "Software Engineer", f_loc: "LOCATION", f_avail: "AVAILABILITY", f_avail_v: "Oct 2026",
+    f_focus: "FOCUS", f_langs: "LANGUAGES", f_langs_v: "EN C1 · FR B2 · AR native",
+    eb_skills: "Stack", skills_title: "What I build with.",
+    sk_lang: "Languages", sk_fw: "Frameworks & Web", sk_db: "Databases", sk_ops: "Cloud & DevOps",
+    eb_exp: "Experience", exp_title: "Where I've worked.",
+    exp_alten: "Full-stack development on SimViewer, a traffic-simulation visualization platform. Built KPI dashboards and a scenario comparator (Angular + Chart.js), refactored a monolithic component into SOLID services with 40+ unit tests, and optimized PostgreSQL/PostGIS queries and Docker workflows.",
+    exp_ge: "Optimized an internal application for performance, security and code quality. Designed a traceability system end to end: database schema, REST API and a Blazor interface.",
+    exp_lib: "Front-end development with Angular and API testing with Postman. Designed and queried MongoDB databases for reliability and performance.",
+    exp_ss: "Backend development in ASP.NET Core with Entity Framework and LINQ. Implemented a Domain-Driven Design architecture for maintainability and scalability.",
+    exp_bm: "Authentication and MySQL management with Laravel. Backend development in PHP following security best practices.",
+    eb_work: "Selected Work", work_title: "Things I've built.",
+    tag_flagship: "Flagship · ALTEN", tag_backend: "Backend", tag_fullstack: "Full-stack", tag_ml: "Deep Learning",
+    proj_sim: "A full-stack platform that turns SUMO traffic simulations into a decision-support tool for evaluating traffic-management strategies. Side-by-side and overlay scenario comparison, KPI charts, and a PostGIS-backed map viewer — with a Bash pipeline that provisions scenarios across Docker, SUMO and PostgreSQL.",
+    proj_ecom_t: "E-Commerce Platform", proj_ecom: "A full e-commerce web app: product catalog, cart and secure checkout, backed by MySQL with a clean MVC structure.",
+    proj_social_t: "Social Posting App", proj_social: "A micro-blogging app inspired by Twitter — user posts, feeds, likes and authentication, built on Laravel.",
+    link_code: "View code",
+    proj_erp_t: "ERP System", proj_erp: "Backend development for an ERP system — business modules, relational data models and REST APIs designed for maintainability.",
+    proj_gym_t: "Gym Management System", proj_gym: "A complete gym management interface — memberships, schedules and an admin dashboard to run day-to-day operations.",
+    proj_resp_t: "Respiratory Sound Classification", proj_resp: "A deep-learning model for automatic classification of respiratory sounds, with audio preprocessing and segmentation for feature extraction. Academic research project.",
+    eb_edu: "Background", edu_title: "Education & certifications.",
+    edu_sub: "Education", cert_sub: "Certifications",
+    edu_ensta: "Engineering Degree — Digital Systems Design",
+    edu_ul: "B.Sc. — Networks & Telecommunications Engineering",
+    edu_ul_m: 'Université Libanaise · <span class="yr">2021 — 2024</span> · Lebanon',
+    eb_contact: "Contact", contact_l1: "Let's build", contact_l2: "something.",
+    contact_p: "I'm looking for a junior software engineer / full-stack .NET role starting October 2026. If that sounds like your team, I'd love to talk.",
+    foot_built: "Built from scratch · Rennes, France"
+  },
+  fr: {
+    nav_about: "À propos", nav_skills: "Compétences", nav_exp: "Expérience", nav_work: "Projets", nav_contact: "Contact",
+    status: "Disponible dès octobre 2026 · Rennes, France",
+    hero_l1: "Ingénieur full-stack,", hero_l2: "je construis des systèmes qui tournent.",
+    hero_sub: "Élève-ingénieur en dernière année à l'ENSTA Bretagne, actuellement en stage de fin d'études chez <strong>ALTEN</strong>. Je conçois et livre des systèmes full-stack — des plateformes de simulation de trafic aux backends en production — avec <strong>.NET</strong>, <strong>Angular</strong> et <strong>PostgreSQL</strong>.",
+    cta_email: "Me contacter", cta_cv: "Télécharger le CV",
+    eb_about: "À propos", about_title: "Ingénieur avant tout, full-stack par polyvalence.",
+    about_p1: "Je suis un ingénieur logiciel qui aime maîtriser une fonctionnalité de bout en bout — du schéma de base de données à l'API jusqu'à ce que l'utilisateur clique réellement. Mon profil couvre l'<strong>architecture backend</strong> (ASP.NET Core, DDD), les <strong>front-ends modernes</strong> (Angular, TypeScript) et la couche de données qui les relie.",
+    about_p2: "Actuellement chez ALTEN, je transforme un visualiseur de simulations de trafic en <strong>plateforme d'aide à la décision</strong> — tableaux de bord KPI, comparateur de scénarios et carte basée sur PostGIS — tout en résolvant les vrais bugs qui n'apparaissent que sous données de production. J'attache de l'importance à un <strong>code simple</strong> et robuste, à une documentation claire et à des livrables qui fonctionnent d'une machine à l'autre.",
+    f_role: "POSTE", f_role_v: "Ingénieur Logiciel", f_loc: "LIEU", f_avail: "DISPONIBILITÉ", f_avail_v: "Oct. 2026",
+    f_focus: "SPÉCIALITÉ", f_langs: "LANGUES", f_langs_v: "EN C1 · FR B2 · AR natif",
+    eb_skills: "Stack", skills_title: "Mes outils.",
+    sk_lang: "Langages", sk_fw: "Frameworks & Web", sk_db: "Bases de données", sk_ops: "Cloud & DevOps",
+    eb_exp: "Expérience", exp_title: "Mon parcours.",
+    exp_alten: "Développement full-stack sur SimViewer, une plateforme de visualisation de simulations de trafic. Création de tableaux de bord KPI et d'un comparateur de scénarios (Angular + Chart.js), refactorisation d'un composant monolithique en services SOLID avec plus de 40 tests unitaires, et optimisation des requêtes PostgreSQL/PostGIS et des workflows Docker.",
+    exp_ge: "Optimisation d'une application interne (performance, sécurité, qualité du code). Conception d'un système de traçabilité de bout en bout : schéma de base de données, API REST et interface Blazor.",
+    exp_lib: "Développement front-end avec Angular et tests d'API avec Postman. Conception et interrogation de bases MongoDB pour la fiabilité et la performance.",
+    exp_ss: "Développement backend en ASP.NET Core avec Entity Framework et LINQ. Implémentation d'une architecture Domain-Driven Design pour la maintenabilité et l'évolutivité.",
+    exp_bm: "Authentification et gestion MySQL sous Laravel. Développement backend en PHP suivant les bonnes pratiques de sécurité.",
+    eb_work: "Projets sélectionnés", work_title: "Ce que j'ai construit.",
+    tag_flagship: "Projet phare · ALTEN", tag_backend: "Backend", tag_fullstack: "Full-stack", tag_ml: "Deep Learning",
+    proj_sim: "Une plateforme full-stack qui transforme les simulations de trafic SUMO en outil d'aide à la décision pour évaluer les stratégies de gestion du trafic. Comparaison de scénarios côte à côte et en superposition, graphiques KPI et visualiseur cartographique basé sur PostGIS — avec un pipeline Bash qui provisionne les scénarios à travers Docker, SUMO et PostgreSQL.",
+    proj_ecom_t: "Plateforme E-Commerce", proj_ecom: "Une application e-commerce complète : catalogue produits, panier et paiement sécurisé, adossés à MySQL avec une structure MVC propre.",
+    proj_social_t: "Réseau de Publication", proj_social: "Une application de micro-blogging inspirée de Twitter — publications, fils d'actualité, likes et authentification, développée avec Laravel.",
+    link_code: "Voir le code",
+    proj_erp_t: "Système ERP", proj_erp: "Développement backend d'un système ERP — modules métier, modèles de données relationnels et API REST conçus pour la maintenabilité.",
+    proj_gym_t: "Gestion de Salle de Sport", proj_gym: "Une interface complète de gestion de salle de sport — abonnements, plannings et tableau de bord d'administration pour piloter le quotidien.",
+    proj_resp_t: "Classification des Sons Respiratoires", proj_resp: "Un modèle de deep learning pour la classification automatique des sons respiratoires, avec prétraitement et segmentation audio pour l'extraction de caractéristiques. Projet de recherche académique.",
+    eb_edu: "Parcours", edu_title: "Formation & certifications.",
+    edu_sub: "Formation", cert_sub: "Certifications",
+    edu_ensta: "Diplôme d'ingénieur — Conception des Systèmes Numériques",
+    edu_ul: "Licence — Génie des Réseaux & Télécommunications",
+    edu_ul_m: 'Université Libanaise · <span class="yr">2021 — 2024</span> · Liban',
+    eb_contact: "Contact", contact_l1: "Construisons", contact_l2: "quelque chose.",
+    contact_p: "Je recherche un poste d'ingénieur logiciel junior / développeur full-stack .NET à partir d'octobre 2026. Si cela correspond à votre équipe, discutons-en.",
+    foot_built: "Conçu de A à Z · Rennes, France"
+  }
+};
+
+function setLang(lang) {
+  const dict = translations[lang];
+  document.documentElement.lang = lang;
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (dict[key] !== undefined) el.innerHTML = dict[key];
+  });
+  document.querySelectorAll('.lang-toggle button').forEach(b => {
+    const active = b.dataset.lang === lang;
+    b.classList.toggle('active', active);
+    b.setAttribute('aria-pressed', active ? 'true' : 'false');
+  });
+  try { localStorage.setItem('mm_lang', lang); } catch (e) {}
+}
+
+document.querySelectorAll('.lang-toggle button').forEach(b => {
+  b.addEventListener('click', () => setLang(b.dataset.lang));
+});
+
+(function initLang() {
+  let saved = 'en';
+  try { saved = localStorage.getItem('mm_lang') || 'en'; } catch (e) {}
+  if (saved === 'fr') setLang('fr');
+})();
+
+/* ---------------- nav scroll state ---------------- */
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 12);
+}, { passive: true });
+
+/* ---------------- reveal on scroll ---------------- */
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+}, { threshold: 0.12 });
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+/* ---------------- traffic-grid canvas ---------------- */
+(function trafficGrid() {
+  const canvas = document.getElementById('grid-canvas');
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const ctx = canvas.getContext('2d');
+  let W, H, dpr, cols, rows, gap = 68, vehicles = [];
+
+  function resize() {
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    const rect = canvas.getBoundingClientRect();
+    W = rect.width; H = rect.height;
+    canvas.width = W * dpr; canvas.height = H * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    cols = Math.ceil(W / gap) + 1;
+    rows = Math.ceil(H / gap) + 1;
+    seed();
+  }
+
+  function seed() {
+    vehicles = [];
+    const count = Math.min(30, Math.floor((cols * rows) / 8));
+    for (let i = 0; i < count; i++) {
+      const horiz = Math.random() > 0.5;
+      vehicles.push({
+        line: Math.floor(Math.random() * (horiz ? rows : cols)),
+        pos: Math.random() * (horiz ? W : H),
+        horiz,
+        speed: (0.25 + Math.random() * 0.55) * (Math.random() > 0.5 ? 1 : -1),
+        amber: Math.random() > 0.72,
+        len: 5 + Math.random() * 9
+      });
+    }
+  }
+
+  function drawGrid() {
+    ctx.clearRect(0, 0, W, H);
+    ctx.lineWidth = 1;
+    ctx.strokeStyle = 'rgba(42,51,66,0.35)';
+    ctx.beginPath();
+    for (let c = 0; c <= cols; c++) { const x = c * gap; ctx.moveTo(x, 0); ctx.lineTo(x, H); }
+    for (let r = 0; r <= rows; r++) { const y = r * gap; ctx.moveTo(0, y); ctx.lineTo(W, y); }
+    ctx.stroke();
+    // intersection dots
+    ctx.fillStyle = 'rgba(42,51,66,0.55)';
+    for (let c = 0; c <= cols; c++) for (let r = 0; r <= rows; r++) {
+      ctx.fillRect(c * gap - 1, r * gap - 1, 2, 2);
+    }
+  }
+
+  function drawVehicles() {
+    vehicles.forEach(v => {
+      let x, y, w, h;
+      if (v.horiz) { const yy = v.line * gap; x = v.pos; y = yy - 1.5; w = v.len; h = 3; }
+      else { const xx = v.line * gap; x = xx - 1.5; y = v.pos; w = 3; h = v.len; }
+      ctx.fillStyle = v.amber ? 'rgba(253,179,71,0.9)' : 'rgba(140,152,170,0.5)';
+      if (v.amber) { ctx.shadowColor = 'rgba(253,179,71,0.6)'; ctx.shadowBlur = 8; }
+      ctx.fillRect(x, y, w, h);
+      ctx.shadowBlur = 0;
+    });
+  }
+
+  function step() {
+    vehicles.forEach(v => {
+      v.pos += v.speed;
+      const max = v.horiz ? W : H;
+      if (v.pos > max + 20) v.pos = -20;
+      if (v.pos < -20) v.pos = max + 20;
+    });
+  }
+
+  function frame() {
+    drawGrid();
+    drawVehicles();
+    step();
+    requestAnimationFrame(frame);
+  }
+
+  resize();
+  window.addEventListener('resize', resize);
+  if (reduce) { drawGrid(); drawVehicles(); }
+  else { requestAnimationFrame(frame); }
+})();
+</script>
+</body>
+</html>
